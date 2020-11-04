@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>52_book</display-name>
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  <!-- 配置谷歌验证码 -->
+   <servlet>
+      <servlet-name>KaptchaServlet</servlet-name>
+      <servlet-class>com.google.code.kaptcha.servlet.KaptchaServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	   <servlet-name>KaptchaServlet</servlet-name>
+  	   <url-pattern>/kaptcha.jpg</url-pattern>
+  </servlet-mapping>
+  
+  <!-- 后台管理员过滤 -->
+   <filter> 
+     	 <filter-name>ManagerFilter</filter-name> 
+  		 <filter-class>com.atguigu.filter.ManagerFilter</filter-class>
+   </filter> 
+    <filter-mapping>
+   		 <filter-name>ManagerFilter</filter-name>
+    	 <url-pattern>/pages/manager/* </url-pattern>
+    	 <url-pattern>/manager/BookServlet </url-pattern>
+   </filter-mapping>
+   
+   <!--BaseDao事务过滤  -->
+   <filter> 
+     	 <filter-name>TransactionFilter</filter-name> 
+  		 <filter-class>com.atguigu.filter.TransactionFilter</filter-class>
+   </filter> 
+    <filter-mapping>
+   		 <filter-name>TransactionFilter</filter-name>
+    	 <!--/* 当前工程下所有请求 -->
+    	 <url-pattern>/*</url-pattern>
+   </filter-mapping>
+   
+   <!-- error-page 标签配置，服务器出错误，自动跳转页面 -->
+   <error-page>
+   		<!-- error-code是错误类型 -->
+   		<error-code>500</error-code>
+
+   		<!-- location标签表示 要跳转的页面路劲 -->   		
+   		<location>/pages/error/error500.jsp</location>
+   </error-page>
+   
+     <error-page>
+   		<error-code>404</error-code>
+   		<location>/pages/error/error404.jsp</location>
+   </error-page>
+</web-app>
